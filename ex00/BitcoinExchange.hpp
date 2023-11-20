@@ -1,29 +1,34 @@
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 
+#include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
+#include <ctime>
 #include <map>
-// #include <ctime>
 
-typedef std::ifstream ifstm;
+typedef std::pair<std::string, float> _kv;
+typedef std::ifstream _ifs;
 
 class BitcoinExchange
 {
 private:
-    std::map<std::string, std::string> dataBase;
+    std::map<std::string, float> dataBase;
     BitcoinExchange( const BitcoinExchange& );
     BitcoinExchange &operator=( const BitcoinExchange& );
 public:
     BitcoinExchange( const char* );
     ~BitcoinExchange();
 
-    void parseInfile( ifstm& ) const;
-    void parseDbfile( ifstm& ) const;
-    void parseInfileFirstLine( ifstm&  ) const;
+    void saveDatabase( _ifs& );
+    void parseInfile( std::string ) const;
     void strtrim( std::string& ) const;
-    void validDate( std::string& ) const;
+    void legitLine( std::string& ) const;
+    void parseInfileFirstLine( _ifs&  ) const;
+    const std::string& legitDate( const std::string&  ) const;
+    // float legitValue( const std::string&  ) const;
 };
 
 

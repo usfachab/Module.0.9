@@ -6,7 +6,7 @@ OBJDIR  = obj
 
 CPPFLAG = -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
 
-SRC     = main.cpp BitcoinExchange.cpp
+SRC     = main.cpp BitcoinExchange.cpp parseFile.cpp
 
 OBJ     = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
