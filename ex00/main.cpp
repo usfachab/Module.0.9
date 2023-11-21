@@ -3,6 +3,11 @@
 
 int main( int argc, char* argv[] )
 {
+    if(argc != 2)
+    {
+        std::cerr << "arg namber wrong \n";
+        return 1;
+    }
     try
     {
         BitcoinExchange change( argv[ 1 ] );

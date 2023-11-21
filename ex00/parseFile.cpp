@@ -60,11 +60,18 @@ void BitcoinExchange::parseInfileFirstLine( _ifs& infile ) const
 void BitcoinExchange::legitLine( std::string& line ) const
 {
     std::string date;
-    // float value;
+    float value;
     try
     {
         date = legitDate( line );
-        // value = legitValue( line );
+        value = legitValue( line );
+        if ( value > 1000 )
+            throw std::invalid_argument( "Error: too large number." );
+        else
+        {
+            iterator itlow = dataBase.lower_bound( date );
+            std::cout << date << " => " << value  << " = "<<  itlow->second * value << std::endl;
+        }
     }
     catch( const std::exception& e )
     {
@@ -72,7 +79,7 @@ void BitcoinExchange::legitLine( std::string& line ) const
     }
 }
 
-const std::string& BitcoinExchange::legitDate( const std::string& line ) const
+std::string BitcoinExchange::legitDate( const std::string& line ) const
 {
     struct tm tm;
     std::string date;
@@ -81,8 +88,37 @@ const std::string& BitcoinExchange::legitDate( const std::string& line ) const
 
     if ( date.length() != 11 || date.find_last_of( ' ' ) == std::string::npos )
         throw std::invalid_argument( "Error: bad input => " + date );
-    if ( !strptime( date.c_str(), "%Y-%m-%d", &tm ) )
+    else if ( !strptime( date.c_str(), "%Y-%m-%d", &tm ) )
         throw std::invalid_argument( "Error: bad input => " + date );
+    strtrim( date );
+    return ( date );
+}
 
-    return ( line );
+float BitcoinExchange::legitValue( std::string& line ) const
+{
+    int point ( 0 );
+    bool digit ( true );
+    std::string value ( line.substr( 12 ) );
+
+    if ( value.empty() )
+        throw std::invalid_argument( "Error: bad input value." );
+    if ( value.at( 0 ) != 32 || !std::isdigit( value.at( 1 ) ) )
+    {
+        if ( value.at( 1 ) == '-' )
+            throw std::invalid_argument( "Error: not a positive number.");
+        else
+            throw std::invalid_argument( "Error: bad input => " + value );
+    }
+
+    strtrim( value );
+    for ( size_t i = 0; i < value.length(); i++ )
+    {
+        if ( value.at( i ) == '.' ) { point++; continue ; }
+        if ( !std::isdigit( value.at( i ) ) ) digit = false;
+    }
+
+    if ( point > 1 || !digit )
+        throw std::invalid_argument( "Error: bad input => " + value );
+    
+    return ( std::stof( value ) );
 }

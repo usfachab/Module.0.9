@@ -7,8 +7,10 @@
 #include <sstream>
 #include <string>
 #include <ctime>
+#include <cctype>
 #include <map>
 
+typedef std::map<std::string, float>::const_iterator iterator;
 typedef std::pair<std::string, float> _kv;
 typedef std::ifstream _ifs;
 
@@ -27,8 +29,8 @@ public:
     void strtrim( std::string& ) const;
     void legitLine( std::string& ) const;
     void parseInfileFirstLine( _ifs&  ) const;
-    const std::string& legitDate( const std::string&  ) const;
-    // float legitValue( const std::string&  ) const;
+    std::string legitDate( const std::string&  ) const;
+    float legitValue(  std::string&  ) const;
 };
 
 
