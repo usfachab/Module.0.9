@@ -2,14 +2,10 @@
 
 int main(int argc, char const *argv[])
 {
-    if ( argc != 2 )
-    {
-        std::cerr << "usage: ./RPN \"operand operand operator\"" << std::endl;
-        return ( 1 );
-    }
-
     try
     {
+        if ( argc != 2 )
+            throw std::invalid_argument( "usage: ./RPN \"operand operand operator\"" );
         RPN rpn( argv[ 1 ] );
         rpn.calculate();
     }
@@ -17,7 +13,5 @@ int main(int argc, char const *argv[])
     {
         std::cerr << e.what() << '\n';
     }
-    
-    
     return 0;
 }

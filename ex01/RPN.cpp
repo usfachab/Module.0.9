@@ -2,53 +2,55 @@
 
 RPN::RPN( std::string arg ) : argument ( arg ) {}
 
-RPN::RPN( const RPN& obj ) { static_cast<void>( obj ); }
+RPN::RPN( const RPN& obj ) { *this = obj; }
 
-RPN& RPN::operator=( const RPN& rhs ) { static_cast<void>( rhs ); return ( *this ); }
+RPN& RPN::operator=( const RPN& rhs )
+{
+    if ( this != &rhs )
+        argument = rhs.argument;
+    return ( *this );
+}
 
 RPN::~RPN() {}
 
 void RPN::calculate()
 {
-    std::stringstream ss( argument );
-    std::string value;
-    int _v1;
-    int _v2;
-    int _v3;
+    float _v1, _v2, _v3;
 
-    while ( std::getline( ss, value, ' ' ) )
+    for ( size_t i = 0; i < argument.length(); i++ )
     {
-        if ( value.length() > 1)
-            throw std::invalid_argument( "Error" );
-        if ( isdigit( value.at( 0 ) ) )
-            stack.push( std::stoi( value ) );
-        else if ( !isdigit( value.at( 0 ) ) )
+        if ( isdigit( argument.at( i ) ) )
+            stack.push( argument.at( i ) - 48 );
+        else if ( argument.at( i ) != ' ' )
         {
             if ( stack.size() < 2 )
                 throw std::invalid_argument( "Error" );
-            _v1 = stack.top();
-            stack.pop();
             _v2 = stack.top();
             stack.pop();
-            _v3 = calc( _v2, _v1, value.at( 0 ) );
+            _v1 = stack.top();
+            stack.pop();
+            _v3 = calc( _v1, _v2, argument.at( i ) );
             stack.push( _v3 );
         }
     }
-    std::cout << stack.top() << std::endl;
+    if ( stack.size() == 1 )
+        printf( "%g\n",  stack.top() );
+    else
+        throw std::invalid_argument( "Error" );
 }
 
-int RPN::calc( int v1, int v2, char opr )
+float RPN::calc( float v1, float v2, char opr )
 {
     switch ( opr )
     {
-    case '+': return ( v1 + v2 );
-    case '-': return ( v1 - v2 );
-    case '*': return ( v1 * v2 );
-    case '/':
-        if ( v1 == 0 && v2 == 0 ) throw std::invalid_argument( "NaN" );
-        if ( v2 == 0 ) throw std::invalid_argument( "infinity" );
-        return ( v1 / v2 );
-    default:
-        throw std::invalid_argument( "invalid operator" );
+        case '+': return ( v1 + v2 );
+        case '-': return ( v1 - v2 );
+        case '*': return ( v1 * v2 );
+        case '/':
+            if ( v1 == 0 && v2 == 0 ) throw std::invalid_argument( "NaN" );
+            if ( v2 == 0 ) throw std::invalid_argument( "infinity" );
+            return ( v1 / v2 );
+        default:
+            throw std::invalid_argument( "invalid operator" );
     }
 }
