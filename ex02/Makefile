@@ -4,20 +4,20 @@ CC      = c++
 
 OBJDIR  = obj
 
-CPPFLAG = -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
+CXXFLAG += -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
 
 SRC     = main.cpp PmergeMe.cpp
 
 OBJ     = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
-all: $(TARGET)
+all: $(TARGET) 
 
 $(TARGET): $(OBJ)
-	$(CC) $(CPPFLAG) -o $@ $^
+	$(CC) $(CXXFLAG) -o $@ $^
 
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(CC) $(CPPFLAG) -c -o $@ $<
+	$(CC) $(CXXFLAG) -c $< -o $@
 
 clean:
 	@rm -f $(OBJ)

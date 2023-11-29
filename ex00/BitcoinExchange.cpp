@@ -1,9 +1,17 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange( const char* filename )
+BitcoinExchange::BitcoinExchange( char** argv )
 {
-    _ifs infile( filename );
-    _ifs dbfile( "data.csv" );
+    _ifs infile( argv[ 1 ] );
+
+    std::string str;
+
+    if ( argv[ 2 ] )
+        str = argv[ 2 ];
+    else    
+        str = "data.csv" ;
+
+    _ifs dbfile( str );
 
     if ( !infile.is_open() || !dbfile.is_open() )
         throw std::invalid_argument( "Error: could not open file." );

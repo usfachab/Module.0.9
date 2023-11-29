@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 #include <string>
 #include <ctime>
 #include <cctype>
@@ -21,7 +22,7 @@ private:
     BitcoinExchange( const BitcoinExchange& );
     BitcoinExchange &operator=( const BitcoinExchange& );
 public:
-    BitcoinExchange( const char* );
+    BitcoinExchange( char** );
     ~BitcoinExchange();
 
     void saveDatabase( _ifs& );
@@ -31,6 +32,9 @@ public:
     void parseInfileFirstLine( _ifs&  ) const;
     std::string legitDate( const std::string&  ) const;
     float legitValue(  std::string&  ) const;
+    bool validate( std::string& ) const;
+    bool february( unsigned int, unsigned int ) const;
+    bool whitespace( _ifs& ) const;
 };
 
 

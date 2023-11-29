@@ -1,10 +1,10 @@
 TARGET  = btc
 
-CC      = c++
+CXX      = c++
 
 OBJDIR  = obj
 
-CPPFLAG = -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
+CXXFLAGS = -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
 
 SRC     = main.cpp BitcoinExchange.cpp parseFile.cpp
 
@@ -13,11 +13,11 @@ OBJ     = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CPPFLAG) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(CC) $(CPPFLAG) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
 	@rm -f $(OBJ)
