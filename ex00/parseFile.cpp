@@ -103,11 +103,11 @@ std::string BitcoinExchange::legitDate( const std::string& line ) const
     std::getline( ss, date, '|' );
 
     if ( date.length() != 11 || date.find_last_of( ' ' ) == std::string::npos )
-        throw std::invalid_argument( "Error: bad input => " + line );
+        throw std::invalid_argument( "Error: bad input1 => " + line );
     else if ( !strptime( date.c_str(), "%Y-%m-%d", &tm ) )
-        throw std::invalid_argument( "Error: bad input => " + line );
+        throw std::invalid_argument( "Error: bad input2 => " + line );
     if ( !validate( date ) )
-        throw std::invalid_argument( "Error: bad input => " + line );
+        throw std::invalid_argument( "Error: bad input3 => " + line );
     strtrim( date );
     return ( date );
 }
@@ -124,14 +124,13 @@ bool BitcoinExchange::validate( std::string& date ) const
 
     if ( year < 2009 || ( year <= 2009 && month <= 1 && day < 2 )  )
         return ( false );
-
     switch ( month )
     {
+        case 2  : if ( !february( year, day ) ) return ( false );
         case 4  :
         case 6  :  
         case 9  :
         case 11 : if ( day > 30 ) return ( false );
-        case 2  : if ( !february( year, day ) ) return ( false );
         default:
             return ( true );
     }
