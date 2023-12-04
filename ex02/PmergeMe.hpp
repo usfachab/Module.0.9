@@ -56,7 +56,7 @@ public:
     {
         for ( int i = 1; i < argc; i++ )
         {
-            int value = std::stoi( argv[ i ] );
+            int value = std::atoi( argv[ i ] );
             if ( value < 0 )
                 throw std::invalid_argument( "Error: positive numbers only." );
             container.push_back( value );

@@ -2,7 +2,7 @@
 
 void BitcoinExchange::parseInfile( std::string filename ) const
 {
-    std::ifstream infile( filename );
+    std::ifstream infile( filename.c_str() );
 
     parseInfileFirstLine( infile );
 
@@ -118,9 +118,9 @@ bool BitcoinExchange::validate( std::string& date ) const
     unsigned int month;
     unsigned int day;
 
-    year    =   std::stoi( date.substr( 0, 4) );
-    month   =   std::stoi( date.substr( 5, 2) );
-    day     =   std::stoi( date.substr( 8, 2 ) );
+    year    =   std::atoi( date.substr( 0, 4).c_str() );
+    month   =   std::atoi( date.substr( 5, 2).c_str() );
+    day     =   std::atoi( date.substr( 8, 2 ).c_str() );
 
     if ( year < 2009 || ( year <= 2009 && month <= 1 && day < 2 )  )
         return ( false );
@@ -198,7 +198,7 @@ float BitcoinExchange::legitValue( std::string& line ) const
         throw std::invalid_argument( "Error: bad input => " + line );
     try
     {
-        x = std::stof( valueStr );
+        x = std::atof( valueStr.c_str() );
     }
     catch(const std::exception& e)
     {

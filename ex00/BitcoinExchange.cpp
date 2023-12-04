@@ -11,7 +11,7 @@ BitcoinExchange::BitcoinExchange( char** argv )
     else    
         str = "data.csv" ;
 
-    _ifs dbfile( str );
+    _ifs dbfile( str.c_str() );
 
     if ( !infile.is_open() || !dbfile.is_open() )
         throw std::invalid_argument( "Error: could not open file." );
@@ -42,7 +42,7 @@ void BitcoinExchange::saveDatabase( _ifs& dbfile )
         std::getline( ss, value );
         if ( key.empty() || value.empty() )
             throw std::invalid_argument( "Error: database is corrupted." );
-        dataBase.insert( _kv( key, std::stof( value ) ) );
+        dataBase.insert( _kv( key, std::atof( value.c_str() ) ) );
     }
 
     if ( dataBase.empty() )

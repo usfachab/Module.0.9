@@ -6,9 +6,10 @@
 #include <fstream> 
 #include <sstream>
 #include <iomanip>
+#include <climits>
+#include <cctype>
 #include <string>
 #include <ctime>
-#include <cctype>
 #include <map>
 
 typedef std::map<std::string, float>::const_iterator iterator;

@@ -34,7 +34,7 @@ void RPN::calculate()
         }
     }
     if ( stack.size() == 1 )
-        printf( "%g\n",  stack.top() );
+        std::cout << stack.top() << std::endl;
     else
         throw std::invalid_argument( "Error" );
 }
