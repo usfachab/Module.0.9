@@ -43,12 +43,12 @@ private:
                 container.at( k ) = left_container.at( i++ );
             else
                 container.at( k ) = right_container.at( j++ );
-        }
-    } 
-public:
-    PmergeMe();
+        }  
+    }
     PmergeMe( const PmergeMe& );
     PmergeMe &operator=( const PmergeMe& );
+public:
+    PmergeMe();
     ~PmergeMe();
 
     template<typename C>

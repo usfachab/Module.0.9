@@ -14,7 +14,7 @@ PmergeMe::~PmergeMe() {}
 
 void PmergeMe::printime( struct timeval ST,struct timeval ET , std::string str, int argc ) const
 {
-    long micro = (ET.tv_sec - ST.tv_sec) * 1000000 + (ET.tv_usec - ST.tv_usec);
+    long micro = ( ET.tv_sec - ST.tv_sec ) * 1000000 + ( ET.tv_usec - ST.tv_usec );
 	double time = micro / 1000.0;
 
     std::cout << "Time to process a range of " << argc - 1;

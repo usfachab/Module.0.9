@@ -15,9 +15,9 @@ int main( int argc, char const **argv )
 
         {
             std::vector<int> vec;
+            gettimeofday( &st,NULL );
             obj.fillContainer( vec, argc, argv );
             obj.printResult( vec, "before: " );
-            gettimeofday( &st,NULL );
             obj.startMerge<std::vector<int> >( vec );
             gettimeofday( &et,NULL );
             obj.printResult( vec, "after: " );
@@ -26,8 +26,8 @@ int main( int argc, char const **argv )
 
         {
             std::deque<int> deq;
-            obj.fillContainer( deq, argc, argv );
             gettimeofday( &st,NULL );
+            obj.fillContainer( deq, argc, argv );
             obj.startMerge<std::deque<int> >( deq );
             gettimeofday( &et,NULL );
             obj.printime( st, et, "std::deque", argc );

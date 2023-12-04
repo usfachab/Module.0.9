@@ -6,7 +6,7 @@ OBJDIR  = obj
 
 CPPFLAG = -Werror -Wall -Wextra -std=c++98 -g3 -fsanitize=address
 
-SRC     = main.cpp RPN.cpp
+SRC     = RPN.cpp main.cpp
 
 OBJ     = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
@@ -14,6 +14,11 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CC) $(CPPFLAG) -o $@ $^
+
+$(OBJDIR)/%.o: %.cpp %.hpp
+	@rm -rf $(OBJDIR)/main.o
+	@mkdir -p $(@D)
+	$(CC) $(CPPFLAG) -c -o $@ $<
 
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(@D)

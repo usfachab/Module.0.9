@@ -49,8 +49,8 @@ bool BitcoinExchange::whitespace( _ifs& infile ) const
 
 void BitcoinExchange::parseInfileFirstLine( _ifs& infile ) const
 {
-    try
-    {
+    // try
+    // {
         std::string line;
         while ( whitespace( infile ) )
             infile.ignore();
@@ -63,11 +63,11 @@ void BitcoinExchange::parseInfileFirstLine( _ifs& infile ) const
 
         while ( infile.peek() == '\n' )
             infile.ignore();
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    // }
+    // catch(const std::exception& e)
+    // {
+    //     std::cerr << e.what() << '\n';
+    // }
 }
 
 void BitcoinExchange::legitLine( std::string& line ) const
@@ -103,11 +103,11 @@ std::string BitcoinExchange::legitDate( const std::string& line ) const
     std::getline( ss, date, '|' );
 
     if ( date.length() != 11 || date.find_last_of( ' ' ) == std::string::npos )
-        throw std::invalid_argument( "Error: bad input1 => " + line );
+        throw std::invalid_argument( "Error: bad input => " + line );
     else if ( !strptime( date.c_str(), "%Y-%m-%d", &tm ) )
-        throw std::invalid_argument( "Error: bad input2 => " + line );
+        throw std::invalid_argument( "Error: bad input => " + line );
     if ( !validate( date ) )
-        throw std::invalid_argument( "Error: bad input3 => " + line );
+        throw std::invalid_argument( "Error: bad input => " + line );
     strtrim( date );
     return ( date );
 }
